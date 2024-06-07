@@ -2,15 +2,15 @@
 import json
 import os
 import unittest
+from http import HTTPStatus
 from unittest.mock import patch
 from uuid import uuid4
-from http import HTTPStatus
 
 # Set environment to testing before importing other modules
 os.environ['ENVIRONMENT'] = 'testing'
 
 from app.api.repository.product_repository import ProductRepository
-from app.config.db import SessionLocal, engine
+from app.config.db import DatabaseConnection
 from app.controllers.product_controller import ProductController
 from app.models.base_model import BaseModel
 from app.models.product_model import ProductModel
@@ -20,8 +20,8 @@ class TestProductController(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         # Set up the test database
-        BaseModel.metadata.create_all(engine)
-        cls.session = SessionLocal()
+        BaseModel.metadata.create_all(bind=DatabaseConnection.engine)
+        cls.session = DatabaseConnection.get_session()
         cls.product_repository = ProductRepository(cls.session)
 
         # Initialize ProductController
@@ -41,7 +41,7 @@ class TestProductController(unittest.TestCase):
     def tearDownClass(cls):
         # Clean up the database
         cls.session.close()
-        BaseModel.metadata.drop_all(engine)
+        BaseModel.metadata.drop_all(DatabaseConnection.engine)
 
     @patch('app.controllers.product_controller.request')
     @patch.object(ProductRepository, 'create')

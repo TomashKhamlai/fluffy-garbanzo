@@ -1,10 +1,6 @@
 import logging
 from typing import TypeVar, Generic
 
-from sqlalchemy.orm import Session
-
-from app.config.db import SessionLocal
-
 Controller = TypeVar('Controller', bound='ApplicationController')
 
 

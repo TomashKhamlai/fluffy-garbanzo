@@ -2,9 +2,9 @@ import faker
 import faker_commerce
 from sqlalchemy.exc import SQLAlchemyError
 
-from app.models.product_model import ProductModel
 from app.api.repository.product_repository import ProductRepository
 from app.models.product_collection import ProductCollection
+from app.models.product_model import ProductModel
 
 fake = faker.Faker()
 fake.add_provider(faker_commerce.Provider)

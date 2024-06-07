@@ -32,25 +32,26 @@ class IndexController(ApplicationController):
         product_collection: ProductCollection = self.product_repository.get_list(12)
         product_data = []
 
-        for product in product_collection:
-            uuid_string = product.uuid_str
-            filename = f'{uuid_string}.png'
-            image_url = f'/qr-images/{filename}'
+        if product_collection is not None:
+            for product in product_collection:
+                uuid_string = product.uuid_str
+                filename = f'{uuid_string}.png'
+                image_url = f'/qr-images/{filename}'
 
-            path_to_image = f'public/qr-codes/{filename}'
+                path_to_image = f'public/qr-codes/{filename}'
 
-            if not os.path.exists(path_to_image):
-                try:
-                    img = qrcode.make(uuid_string)
-                    img.save(path_to_image)
-                except FileNotFoundError as e:
-                    error(f'Error: {e}. Could not save QR code for product {product.id}.')
+                if not os.path.exists(path_to_image):
+                    try:
+                        img = qrcode.make(uuid_string)
+                        img.save(path_to_image)
+                    except FileNotFoundError as e:
+                        error(f'Error: {e}. Could not save QR code for product {product.id}.')
 
-            product_data.append({
-                'name': product.name,
-                'uuid': uuid_string,
-                'image_url': image_url
-            })
+                product_data.append({
+                    'name': product.name,
+                    'uuid': uuid_string,
+                    'image_url': image_url
+                })
 
         response.content_type = 'application/json'
         return json.dumps(product_data)

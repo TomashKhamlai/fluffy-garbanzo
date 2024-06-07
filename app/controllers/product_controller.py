@@ -1,9 +1,9 @@
 import json
+from http import HTTPStatus
 from logging import info, error, exception
 from typing import Dict
 from uuid import UUID
 
-from http import HTTPStatus
 from bottle import request, HTTPResponse
 
 from app.api.repository.product_repository import ProductRepository

@@ -2,20 +2,21 @@ import os
 
 from bottle import Bottle, TEMPLATE_PATH
 
+from app.config.db import DatabaseConnection
 from app.config.routes import setup_routing
 
 
 class App:
     def __init__(
-        self,
-        server='auto',
-        host='0.0.0.0',
-        port=8080,
-        db_name='',
-        db_echo=False,
-        reloader=False,
-        debug=False,
-        template_path='app/views/'
+            self,
+            server='auto',
+            host='0.0.0.0',
+            port=8080,
+            db_name='',
+            db_echo=False,
+            reloader=False,
+            debug=False,
+            template_path='app/views/'
     ):
         self.server_type = server
         self.host = host
@@ -30,6 +31,9 @@ class App:
 
         if self.template_path not in TEMPLATE_PATH:
             TEMPLATE_PATH.append(self.template_path)
+
+    def add_database_connection(self):
+        DatabaseConnection.init_database_connection()
 
     def add_routes(self):
         setup_routing(self.bottleInstance)

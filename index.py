@@ -1,4 +1,3 @@
-from logging import info
 import importlib.util
 import sys
 from logging import info
@@ -69,6 +68,7 @@ def main():
         debug=environment.debug
     )
 
+    application.add_database_connection()
     application.add_routes()
     print_startup_message(application.host, application.port)
     application.run()
