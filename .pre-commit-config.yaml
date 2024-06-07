@@ -1,0 +1,25 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace                   # Removes trailing whitespace.
+      - id: end-of-file-fixer                     # Ensures file ends with a newline.
+      - id: double-quote-string-fixer             # Converts single quotes to double quotes.
+      - id: requirements-txt-fixer                # Sorts and deduplicates requirements.txt contents.
+      - id: check-ast                             # Checks for valid Python syntax.
+      - id: check-case-conflict                   # Prevents files with names that would conflict on a case-insensitive filesystem.
+      - id: check-shebang-scripts-are-executable  # Ensures scripts with shebang are executable.
+      - id: debug-statements                      # Detects debug statements (e.g., print).
+
+  - repo: local
+    hooks:
+      - id: check-python-version
+        name: Check Python Version
+        entry: python ./.hooks/check_python_version.py
+        language: python
+        stages: [ commit ]
+      - id: run-tests
+        name: Run Tests
+        entry: python ./.hooks/run_tests.py
+        language: python
+        stages: [ pre-push ]

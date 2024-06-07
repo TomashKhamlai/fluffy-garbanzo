@@ -1,0 +1,17 @@
+/.venv
+/.idea
+/public/qr-codes/*.png
+/.coverage
+/coverage_html_report
+*.db
+README.md
+app/config/settings-development.py.sample
+app/config/environments/*
+!app/config/environments/development.py
+
+# Ignore Python bytecode files
+*.pyc
+
+# Ignore cache directories
+**/__pycache__/
+.vscode/
